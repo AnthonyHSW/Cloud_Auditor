@@ -11,4 +11,4 @@ Please indicate what version of the project you have found the issue in.
 ## Reporting a Vulnerability
 
 If you find a vulnerability please email Anw2727@gmail.com and indicate on the email that it is an issue related to
-project_alpha and please give 1-2 business days for a response.
+Cloud_Auditor and please give 1-2 business days for a response.
