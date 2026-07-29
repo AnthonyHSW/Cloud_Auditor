@@ -1,0 +1,31 @@
+-- 1. Track the infrastructure environments we are scanning
+CREATE TABLE cloud_accounts (
+    account_id VARCHAR(50) PRIMARY KEY,
+    account_name VARCHAR(100) NOT NULL,
+    provider VARCHAR(20) NOT NULL, -- 'aws', 'gcp', 'azure'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. The core inventory table tracking active resources
+CREATE TABLE inventory (
+    resource_id VARCHAR(255) PRIMARY KEY, -- e.g., i-0abcd1234efgh5678
+    account_id VARCHAR(50) REFERENCES cloud_accounts(account_id),
+    resource_type VARCHAR(50) NOT NULL,  -- 'ec2', 's3_bucket', 'rds'
+    region VARCHAR(30) NOT NULL,
+    status VARCHAR(20) NOT NULL,          -- 'running', 'stopped', 'active'
+    owner_tag VARCHAR(100),               -- Extracted from resource tags
+    project_tag VARCHAR(100),             -- Extracted from resource tags
+    estimated_hourly_cost NUMERIC(10, 4) DEFAULT 0.0000,
+    launch_time TIMESTAMP,
+    last_scanned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3. Log compliance violations (e.g., missing tags, zombie state)
+CREATE TABLE compliance_violations (
+    violation_id SERIAL PRIMARY KEY,
+    resource_id VARCHAR(255) REFERENCES inventory(resource_id) ON DELETE CASCADE,
+    violation_type VARCHAR(50) NOT NULL,  -- 'MISSING_OWNER_TAG', 'UNUSED_STOPPED_INSTANCE'
+    severity VARCHAR(10) NOT NULL,        -- 'LOW', 'MEDIUM', 'HIGH'
+    detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    resolved_at TIMESTAMP
+);
