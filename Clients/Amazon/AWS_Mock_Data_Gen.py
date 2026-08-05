@@ -49,7 +49,7 @@ def parse_aws(mock_response):
         for instance in reservation.get("Instances", []):
             # extracting data
             instance_id = instance.get("InstanceId")
-            status = instance.get("State, {}").get("Name")
+            status = instance.get("State", {}).get("Name")
             launch_time = instance.get("LaunchTime")
             raw_tag = instance.get("Tags")
             dict_tag = {tag["Key"]: tag["Value"] for tag in raw_tag}
