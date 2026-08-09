@@ -27,10 +27,11 @@ def create_table(data):
                 )
             ''')
             for row in data:
-                cursor.execute('''
-                    INSERT OR REPLACE INTO Azure_Inventory (resource_id, resource_type, status, time_created, owner_tag, project_tag)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                ''', (row["resource_id"], row["resource_type"], row["status"], row["launch_time"], row["owner_tag"], row["project_tag"]))
+                if row["status"] == "running":
+                    cursor.execute('''
+                        INSERT OR REPLACE INTO Azure_Inventory (resource_id, resource_type, status, time_created, owner_tag, project_tag)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    ''', (row["resource_id"], row["resource_type"], row["status"], row["launch_time"], row["owner_tag"], row["project_tag"]))
             file.commit()
     finally:
         file.close()
