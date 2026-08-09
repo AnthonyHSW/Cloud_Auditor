@@ -10,6 +10,7 @@ This is the main entry point for the program.
 import time
 import datetime
 from Clients.Amazon import AWS_client
+from Clients.Azure import Azure_client
 
 def collect_data():
     '''
@@ -47,7 +48,7 @@ def execute_auditor(type_of_cloud):
     if type_of_cloud == "1":
         AWS_client.main()
     elif type_of_cloud == "2":
-        print("Azure client is not yet implemented.")
+        Azure_client.main()
     elif type_of_cloud == "3":
         print("GCP client is not yet implemented.")
     else:
