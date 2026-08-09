@@ -6,7 +6,7 @@ creates a table in a sqlite3 database for the user to store their Azure inventor
 
 from contextlib import closing
 import sqlite3
-import Azure_Mock_Data_Gen as data
+from . import Azure_Mock_Data_Gen as data
 
 def create_table(data):
     '''
@@ -36,7 +36,6 @@ def create_table(data):
     finally:
         file.close()
 
-if __name__ == "__main__":
-    mock_response = data.get_mock_azure_vms()
-    parsed_data = data.parse_azure(mock_response)
-    create_table(parsed_data)
+mock_response = data.get_mock_azure_vms()
+parsed_data = data.parse_azure(mock_response)
+create_table(parsed_data)

@@ -9,8 +9,8 @@ This is the main entry point for the program.
 
 import time
 import datetime
-from Clients.Amazon import AWS_client
-from Clients.Azure import Azure_client
+from Amazon import AWS_client
+from Azure import Azure_client
 
 def collect_data():
     '''
@@ -67,8 +67,6 @@ def main():
             execute_auditor(type_of_cloud)
             next_run = schedule_auditor(frequency)
         time.sleep(120)  # Check every 2 minutes
-    
-    
 
 
 if __name__ == "__main__":

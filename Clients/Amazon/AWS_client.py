@@ -1,5 +1,5 @@
 # Project_Alpha - A cost reducing program for AWS services.
-import AWS_Mock_Data_Gen as data
+from . import AWS_Mock_Data_Gen as data
 from contextlib import closing
 import sqlite3
 
@@ -31,7 +31,6 @@ def create_table(data):
     finally:
         file.close()
 
-if __name__ == "__main__":
-    mock_response = data.mock_ec2_instance()
-    parsed_data = data.parse_aws(mock_response)
-    create_table(parsed_data)
+mock_response = data.mock_ec2_instance()
+parsed_data = data.parse_aws(mock_response)
+create_table(parsed_data)
